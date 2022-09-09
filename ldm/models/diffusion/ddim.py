@@ -10,11 +10,12 @@ from ldm.modules.diffusionmodules.util import make_ddim_sampling_parameters, mak
 
 
 class DDIMSampler(object):
-    def __init__(self, model, schedule="linear", **kwargs):
+    def __init__(self, model, on_step, schedule="linear", **kwargs):
         super().__init__()
         self.model = model
         self.ddpm_num_timesteps = model.num_timesteps
         self.schedule = schedule
+        self.on_step = on_step
 
     def register_buffer(self, name, attr):
         if type(attr) == torch.Tensor:
@@ -139,6 +140,9 @@ class DDIMSampler(object):
 
         for i, step in enumerate(iterator):
             index = total_steps - i - 1
+
+            self.on_step(i-1, total_steps)
+
             ts = torch.full((b,), step, device=device, dtype=torch.long)
 
             if mask is not None:

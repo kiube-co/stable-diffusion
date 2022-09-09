@@ -26,6 +26,8 @@ kornia = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 pydantic = "*"
+pusher = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

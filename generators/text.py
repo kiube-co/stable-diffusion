@@ -1,6 +1,7 @@
 import hashlib
 import os.path
 import time
+from typing import Callable
 
 import cv2
 import numpy as np
@@ -105,7 +106,7 @@ class TextGenerator:
                 x_checked_image[i] = self.load_replacement(x_checked_image[i])
         return x_checked_image, has_nsfw_concept
 
-    def generate(self, query: Query):
+    def generate(self, query: Query, on_step: Callable):
         self.seed(query.seed)
         config = OmegaConf.load(self.config)
         model = self.load_model_from_config(config, self.model_checkpoint_path)
@@ -115,7 +116,7 @@ class TextGenerator:
         if query.sampler == SamplerEnum.plms:
             sampler = PLMSSampler(model)
         elif query.sampler == SamplerEnum.ddim:
-            sampler = DDIMSampler(model)
+            sampler = DDIMSampler(model, on_step)
         else:
             raise ValueError('Invalid sampler')
 
