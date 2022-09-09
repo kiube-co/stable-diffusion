@@ -23,6 +23,9 @@ transformers = "*"
 taming-transformers = {editable = true, ref = "master", git = "https://github.com/CompVis/taming-transformers.git"}
 clip = {editable = true, ref = "main", git = "https://github.com/openai/CLIP.git"}
 kornia = "*"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = "*"
 
 [dev-packages]
 
