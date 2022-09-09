@@ -9,5 +9,7 @@ __pycache__/
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
 /models/ldm/stable-diffusion-v1/model.ckpt
+
+# Generated images
+images/
