@@ -28,6 +28,8 @@ uvicorn = {extras = ["standard"], version = "*"}
 pydantic = "*"
 pusher = "*"
 python-dotenv = "*"
+tinydb = "*"
+pickledb = "*"
 
 [dev-packages]
 

@@ -97,16 +97,16 @@ class TextGenerator:
         return pil_images
 
     def check_safety(self, x_image):
-        safety_checker_input = self.safety_feature_extractor(self.numpy_to_pil(x_image), return_tensors="pt")
-        x_checked_image, has_nsfw_concept = self.safety_checker(images=x_image,
-                                                                clip_input=safety_checker_input.pixel_values)
-        assert x_checked_image.shape[0] == len(has_nsfw_concept)
-        for i in range(len(has_nsfw_concept)):
-            if has_nsfw_concept[i]:
-                x_checked_image[i] = self.load_replacement(x_checked_image[i])
-        return x_checked_image, has_nsfw_concept
+        # safety_checker_input = self.safety_feature_extractor(self.numpy_to_pil(x_image), return_tensors="pt")
+        # x_checked_image, has_nsfw_concept = self.safety_checker(images=x_image,
+        #                                                         clip_input=safety_checker_input.pixel_values)
+        # assert x_checked_image.shape[0] == len(has_nsfw_concept)
+        # for i in range(len(has_nsfw_concept)):
+        #     if has_nsfw_concept[i]:
+        #         x_checked_image[i] = self.load_replacement(x_checked_image[i])
+        return x_image, False
 
-    def generate(self, query: Query, on_step: Callable):
+    def generate(self, query: Query, on_step: Callable, on_complete: Callable):
         self.seed(query.seed)
         config = OmegaConf.load(self.config)
         model = self.load_model_from_config(config, self.model_checkpoint_path)
@@ -179,3 +179,4 @@ class TextGenerator:
                                 img.save(os.path.join(self.output_path, query.filename()))
                                 base_count += 1
                     toc = time.time()
+            on_complete()

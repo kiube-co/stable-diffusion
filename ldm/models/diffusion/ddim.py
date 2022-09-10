@@ -141,7 +141,7 @@ class DDIMSampler(object):
         for i, step in enumerate(iterator):
             index = total_steps - i - 1
 
-            self.on_step(i-1, total_steps)
+            self.on_step(i + 1, total_steps)
 
             ts = torch.full((b,), step, device=device, dtype=torch.long)
 

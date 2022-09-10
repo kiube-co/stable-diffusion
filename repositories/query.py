@@ -1,4 +1,5 @@
 from hashlib import sha256, sha1
+from os import getenv
 
 from pydantic import BaseModel, validator
 
@@ -18,6 +19,12 @@ class Query(BaseModel):
     def filename(self):
         data = self.json()
         return f"{sha1(data.encode('utf-8')).hexdigest()}.png"
+
+
+    def as_json(self):
+        data = self.dict()
+        data["url"] = f"{getenv('HOST')}/images/{self.filename()}"
+        return data
 
     @validator('prompt')
     def name_must_not_be_empty(cls, v):
