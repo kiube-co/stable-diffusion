@@ -16,3 +16,7 @@ images/
 
 # Environment variables
 *.env
+
+# Local databases
+db.json
+settings.db
